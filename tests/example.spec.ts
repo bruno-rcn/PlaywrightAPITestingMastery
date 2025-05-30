@@ -1,18 +1,31 @@
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('GET - tags', async ({ request }) => {
+  const tagsResponse = await request.get('https://conduit-api.bondaracademy.com/api/tags')
+  console.log(tagsResponse)
+  
+  console.log('/////////////////////////////////////////////////////////////////////////////////////')
+  
+  // here we get the content body response
+  const tagsResponseJson = await tagsResponse.json()
+  console.log(tagsResponseJson)
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+  expect(tagsResponse.status()).toEqual(200)
+  expect(tagsResponseJson.tags[0]).toEqual('Test')
+  expect(tagsResponseJson.tags.length).toBeLessThanOrEqual(10)
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('GET - articles', async ({request}) => {
+  const articlesResponse = await request.get('https://conduit-api.bondaracademy.com/api/articles?limit=10&offset=0')
+  console.log(articlesResponse)
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  console.log('/////////////////////////////////////////////////////////////////////////////////////')
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-});
+  const articlesResponseJson = await articlesResponse.json()
+  console.log(articlesResponseJson)
+
+  expect(articlesResponse.status()).toEqual(200)
+  expect(articlesResponseJson.articles[0].title).toContain('Discover Bondar Academy: Your Gateway to Efficient Learning')
+  expect(articlesResponseJson.articles.length).toBeLessThanOrEqual(10) // this limit is set in: limit=10 on url
+  expect(articlesResponseJson.articlesCount).toEqual(10)
+})

@@ -34,3 +34,8 @@ Day 2 - *Module 2: API Testing Basics*:
     - To get the authorization: Go to Headers page - Request Headers - Authorization [courseSchema\imgs\autho.png]
         - use this on postman (copy the entiry token): [courseSchema\imgs\postman.png]
         - body of the request: [courseSchema\imgs\body request.png]
+
+Day 3:
+- Start tests using playwright;
+- We need to use the keyword "await" always we use a promisse in javascript: this will return the value if will be ok or will be reject if something is wrong
+- Tests for API we use ({request}) fixture from playwright instead use ({page})
