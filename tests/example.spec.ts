@@ -29,3 +29,47 @@ test('GET - articles', async ({request}) => {
   expect(articlesResponseJson.articles.length).toBeLessThanOrEqual(10) // this limit is set in: limit=10 on url
   expect(articlesResponseJson.articlesCount).toEqual(10)
 })
+
+test('POST - create article', async ({request}) => {
+  
+  // 1 - sign in
+  const signIn = await request.post('https://conduit-api.bondaracademy.com/api/users/login', {
+    data: {"user":{"email":"brunor@teste.com","password":"12345678"}}
+  })
+
+  // 2 - get the body data injson format
+  const signInResponseJSON = await signIn.json()
+  console.log(signInResponseJSON)
+
+  // 3 - get the token value
+  const authToken = 'Token ' + signInResponseJSON.user.token
+  console.log(authToken)
+
+  // 4 - Create the article
+  const newArticle = await request.post('https://conduit-api.bondaracademy.com/api/articles/', {
+    headers: {Authorization: authToken},
+    data: {
+      "article": {
+          "title": "teste postman",
+          "description": "teste postman",
+          "body": "teste postman",
+          "tagList": []
+      }
+    }
+  })
+
+  const newArticleResponseJSON = await newArticle.json()
+  console.log(newArticleResponseJSON)
+
+  expect(newArticle.status()).toEqual(201)
+  expect(newArticleResponseJSON.article.title).toContain('teste postman')
+
+  // 6 - is a best practice make a Get request after make a post to validete
+  const articlesResponse = await request.get('https://conduit-api.bondaracademy.com/api/articles?limit=10&offset=0', {
+    headers: {Authorization: authToken}
+  })
+  expect(articlesResponse.status()).toEqual(200)
+
+  const articlesResponseJson = await articlesResponse.json()
+  expect(articlesResponseJson.articles[0].title).toContain('teste postman')
+})

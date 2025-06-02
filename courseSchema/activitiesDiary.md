@@ -39,3 +39,7 @@ Day 3:
 - Start tests using playwright;
 - We need to use the keyword "await" always we use a promisse in javascript: this will return the value if will be ok or will be reject if something is wrong
 - Tests for API we use ({request}) fixture from playwright instead use ({page})
+
+Day 4:
+- Work with authorization endpoint
+- Create a new article POST and validated the article GET
