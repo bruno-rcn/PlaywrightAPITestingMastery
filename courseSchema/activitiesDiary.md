@@ -43,3 +43,7 @@ Day 3:
 Day 4:
 - Work with authorization endpoint
 - Create a new article POST and validated the article GET
+
+Day 5:
+- Create a Delete and Put requests
+- Work with hooks
