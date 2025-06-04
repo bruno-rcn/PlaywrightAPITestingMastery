@@ -47,3 +47,8 @@ Day 4:
 Day 5:
 - Create a Delete and Put requests
 - Work with hooks
+
+Day 6:
+- APIs requests basicaly has 5 componets: URL, Path, Headers, Parameters and Body
+- Create folder utils to put all helpers components: create a function to each component from API request
+- Created the smokeTest file to demonstrate how to use this methods
