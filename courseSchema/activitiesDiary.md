@@ -52,3 +52,9 @@ Day 6:
 - APIs requests basicaly has 5 componets: URL, Path, Headers, Parameters and Body
 - Create folder utils to put all helpers components: create a function to each component from API request
 - Created the smokeTest file to demonstrate how to use this methods
+
+Day 7:
+- Start to work with fixtures (file created in utils)
+- Test fixtures is a function works as a pre condition or teardown for your test (like before and after hooks)
+- After that we will import test from this file not from playwright
+- Create a fixture - import this fixtures into the playwright tests instead tests from playwright

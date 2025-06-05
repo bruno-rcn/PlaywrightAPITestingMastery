@@ -1,5 +1,4 @@
-import { test, expect } from '@playwright/test';
-import { RequestHandler } from '../utils/request-handler';
+import { test } from '../utils/fixtures';
 
 let authToken: string
 
@@ -11,10 +10,7 @@ test.beforeAll('Get auth token', async ({request}) => {
   authToken = 'Token ' + signInResponseJSON.user.token
 })
 
-test('How to use the methods from RequestHandler file', async({}) => {
-
-    const api = new RequestHandler()
-
+test('How to use the methods from RequestHandler file', async({api}) => {
     api
         .url('https://conduit-api.bondaracademy.com/api')
         .path('/articles')
