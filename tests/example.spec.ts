@@ -17,13 +17,13 @@ test.beforeAll('Get auth token', async ({request}) => {
 
 test('GET - tags', async ({ request }) => {
   const tagsResponse = await request.get('https://conduit-api.bondaracademy.com/api/tags')
-  console.log(tagsResponse)
+  // console.log(tagsResponse)
   
-  console.log('/////////////////////////////////////////////////////////////////////////////////////')
+  // console.log('/////////////////////////////////////////////////////////////////////////////////////')
   
   // here we get the content body response
   const tagsResponseJson = await tagsResponse.json()
-  console.log(tagsResponseJson)
+  // console.log(tagsResponseJson)
 
   expect(tagsResponse.status()).toEqual(200)
   expect(tagsResponseJson.tags[0]).toEqual('Test')
@@ -32,12 +32,12 @@ test('GET - tags', async ({ request }) => {
 
 test('GET - articles', async ({request}) => {
   const articlesResponse = await request.get('https://conduit-api.bondaracademy.com/api/articles?limit=10&offset=0')
-  console.log(articlesResponse)
+  // console.log(articlesResponse)
 
-  console.log('/////////////////////////////////////////////////////////////////////////////////////')
+  // console.log('/////////////////////////////////////////////////////////////////////////////////////')
 
   const articlesResponseJson = await articlesResponse.json()
-  console.log(articlesResponseJson)
+  // console.log(articlesResponseJson)
 
   expect(articlesResponse.status()).toEqual(200)
   expect(articlesResponseJson.articles[0].title).toContain('Discover Bondar Academy: Your Gateway to Efficient Learning')
@@ -60,7 +60,7 @@ test('POST, PUT, Get and Delete - article', async ({request}) => {
   })
 
   const newArticleResponseJSON = await newArticle.json()
-  console.log(newArticleResponseJSON)
+  // console.log(newArticleResponseJSON)
 
   expect(newArticle.status()).toEqual(201)
   expect(newArticleResponseJSON.article.title).toContain('teste postman')

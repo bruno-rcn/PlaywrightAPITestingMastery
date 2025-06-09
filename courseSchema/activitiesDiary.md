@@ -6,6 +6,7 @@ At the first day on the course, the activities has done were:
     a. site used: https://conduit.bondaracademy.com/;
     b. Environment Configuration
 
+
 Day 2 - *Module 2: API Testing Basics*:
 - What is API?
     - API means: Application Programming Interface
@@ -24,6 +25,7 @@ Day 2 - *Module 2: API Testing Basics*:
         400 -> Something wrong with the request made by the user
         500 -> Something wrong with the request at the server
 
+
 - Exploring API using Postman
     - Go to the site
     - Open Development tool (right click on mouse - inspect optin)
@@ -35,26 +37,48 @@ Day 2 - *Module 2: API Testing Basics*:
         - use this on postman (copy the entiry token): [courseSchema\imgs\postman.png]
         - body of the request: [courseSchema\imgs\body request.png]
 
+
 Day 3:
 - Start tests using playwright;
 - We need to use the keyword "await" always we use a promisse in javascript: this will return the value if will be ok or will be reject if something is wrong
 - Tests for API we use ({request}) fixture from playwright instead use ({page})
 
+
 Day 4:
 - Work with authorization endpoint
 - Create a new article POST and validated the article GET
 
+
 Day 5:
 - Create a Delete and Put requests
 - Work with hooks
+
 
 Day 6:
 - APIs requests basicaly has 5 componets: URL, Path, Headers, Parameters and Body
 - Create folder utils to put all helpers components: create a function to each component from API request
 - Created the smokeTest file to demonstrate how to use this methods
 
+
 Day 7:
 - Start to work with fixtures (file created in utils)
 - Test fixtures is a function works as a pre condition or teardown for your test (like before and after hooks)
 - After that we will import test from this file not from playwright
 - Create a fixture - import this fixtures into the playwright tests instead tests from playwright
+
+
+Day 8:
+- Create a method to build a url: private getUrl()
+- Create a method to build the request fixture using the constructor into the RequestHandler
+    - 1 - we have the class RequestHandler to create our method to build the url and the requets
+    - 2 - then we have the class fixtures to import RequestHandler and created a method api to use the methods from RequestHandler and create our tests
+    - 3 - use the api instead request at the parameter on the test to use this methods from RequestHandler - like async({api})
+
+
+Day 9:
+- Create Post, Put and Delete requester methods on RequestHandler
+- Use this methods into the tests
+- Logger.ts will bringing us the logs details about the request and responses
+- Created the file custom-expect.ts to update the expect from a request
+- Created the file api-test-config to be responsible to have the information values for the tests than you can use on into the tests [test('', async({api, config}))]
+- Into the helpers folder we have the data are repetitives and pre conditions
