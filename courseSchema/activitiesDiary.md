@@ -82,3 +82,8 @@ Day 9:
 - Created the file custom-expect.ts to update the expect from a request
 - Created the file api-test-config to be responsible to have the information values for the tests than you can use on into the tests [test('', async({api, config}))]
 - Into the helpers folder we have the data are repetitives and pre conditions
+
+
+Day 10:
+- Setting up anAutomatic Authorization token
+- Update the config file from playwright

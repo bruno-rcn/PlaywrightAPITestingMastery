@@ -3,11 +3,11 @@ import { test } from '../utils/fixtures';
 import { expect } from '../utils/custom-expect';
 import { createToken } from '../helpers/createToke';
 
-let authToken: string
+// let authToken: string
 
-test.beforeAll('Get auth token', async ({api, config}) => {
-  authToken = await createToken(config.userEmail, config.userPassword)
-})
+// test.beforeAll('Get auth token', async ({api, config}) => {
+//   authToken = await createToken(config.userEmail, config.userPassword)
+// })
 
 // Here we call the method (api) that came from fixtures who use the others methods that came from RequestHandler to make our tests
 test('How to use the methods from RequestHandler file', async({api}) => {
@@ -15,7 +15,7 @@ test('How to use the methods from RequestHandler file', async({api}) => {
         // .url('https://conduit-api.bondaracademy.com/api') // if not use this methos {this.baseUrl} the value will comes from {this.defaultBaseUrl}
         .path('/articles')
         .params({limit:10, offset:0}) // now, with the loof for created on the method getUrl aways we put a queryParams here that will be attach in the right way
-        .headers({Authorization: authToken})
+        // .headers({Authorization: authToken})
         // .body({"user":{"email":"brunor@teste.com","password":"12345678"}}) // Its comments because this endpoins doesnt have a body its just to show how to use
 })
 
@@ -37,7 +37,7 @@ test('Create and Delete article', async({api}) => {
   const createArticleResponse = 
     await api
       .path('/articles')
-      .headers({Authorization: authToken})
+      // .headers({Authorization: authToken}) - dont need because created a methodto authorize by default
       .body({
         "article": {
             "title": "create article test - title",
@@ -58,14 +58,14 @@ test('Create and Delete article', async({api}) => {
       await api
         .path('/articles')
         .params({limit:10, offset:0})
-        .headers({Authorization: authToken})
+        // .headers({Authorization: authToken})
         .getRequest(200)
   expect(getArticlesResponse.articles[0].title).toContain('create article test - title')
 
   // 4 - Delete article
       await api 
         .path(`/articles/${slugId}`)
-        .headers({Authorization: authToken})
+        // .headers({Authorization: authToken})
         .deleteRequest(204)
 
   // 5 - Confirm that article was deleted
@@ -73,7 +73,7 @@ test('Create and Delete article', async({api}) => {
       await api
         .path('/articles')
         .params({limit:10, offset:0})
-        .headers({Authorization: authToken})
+        // .headers({Authorization: authToken})
         .getRequest(200)
   expect(getArticlesAfterDeleteResponse.articles[0].title).not.toContain('create article test - title')
 })
@@ -83,7 +83,7 @@ test('Create, Update and Delete article', async({api}) => {
   const createArticleResponse = 
     await api
       .path('/articles')
-      .headers({Authorization: authToken})
+      // .headers({Authorization: authToken})
       .body({
         "article": {
             "title": "create article test - title",
@@ -104,7 +104,7 @@ test('Create, Update and Delete article', async({api}) => {
       await api
         .path('/articles')
         .params({limit:10, offset:0})
-        .headers({Authorization: authToken})
+        // .headers({Authorization: authToken})
         .getRequest(200)
   expect(getArticlesResponse.articles[0].title).toContain('create article test - title')
 
@@ -112,7 +112,7 @@ test('Create, Update and Delete article', async({api}) => {
   const updateArticleResponse = 
       await api
         .path(`/articles/${slugId}`)
-        .headers({Authorization: authToken})
+        // .headers({Authorization: authToken})
         .body({
           "article": {
               "title": "teste Update",
@@ -130,7 +130,7 @@ test('Create, Update and Delete article', async({api}) => {
   // 6 - Delete article
       await api 
         .path(`/articles/${newSlugId}`)
-        .headers({Authorization: authToken})
+        // .headers({Authorization: authToken})
         .deleteRequest(204)
 
   // 7 - Confirm that article was deleted
@@ -138,7 +138,7 @@ test('Create, Update and Delete article', async({api}) => {
       await api
         .path('/articles')
         .params({limit:10, offset:0})
-        .headers({Authorization: authToken})
+        // .headers({Authorization: authToken})
         .getRequest(200)
   expect(getArticlesAfterDeleteResponse.articles[0].title).not.toContain('teste Update')
 })

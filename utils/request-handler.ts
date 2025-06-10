@@ -1,5 +1,5 @@
 import { APIRequestContext } from "@playwright/test"
-import { expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import { APILogger } from "./logger";
 
 // Create the methods to work with the api's
@@ -13,11 +13,14 @@ export class RequestHandler {
     private apiHeaders: Record<string, string> = {}
     private apiBody: object = {}
     private request: APIRequestContext // this APIContext is the same thing to [test.beforeAll('Get auth token', async ({request})]
+    private defaultAuthToken: string
+    private clearAuthFlag: boolean
 
-    constructor(requestValue: APIRequestContext, apiBaseUrl: string, loggerValue: APILogger){
+    constructor(requestValue: APIRequestContext, apiBaseUrl: string, loggerValue: APILogger, authToken: string = ''){
         this.request = requestValue
         this.defaultBaseUrl = apiBaseUrl
         this.logger = loggerValue
+        this.defaultAuthToken = authToken
     }
 
     url(url: string){
@@ -46,6 +49,11 @@ export class RequestHandler {
         return this
     }
 
+    clearAuth(){
+        this.clearAuthFlag = true
+        return this
+    }
+
     // this URL object comes from node js and let you build and modifie an URL
     // Hows is it works: if the value of {this.baseUrl} was not provide or undefine, then, the method will use the value from {this.defaultBaseUrl}
     private getUrl(){
@@ -64,11 +72,11 @@ export class RequestHandler {
         const url = this.getUrl()
 
         // 2 - Capture the logRequest
-        this.logger.logRequest('GET', url, this.apiHeaders)
+        this.logger.logRequest('GET', url, this.getHeaders())
 
         // 3 - get the response
         const response = await this.request.get(url, {
-            headers: this.apiHeaders
+            headers: this.getHeaders()
         })
         this.cleanupFields()
 
@@ -89,10 +97,10 @@ export class RequestHandler {
     async postRequest(statusCode: number){
         const url = this.getUrl()
 
-        this.logger.logRequest('POST', url, this.apiHeaders, this.apiBody)
+        this.logger.logRequest('POST', url, this.getHeaders(), this.apiBody)
 
         const response = await this.request.post(url, {
-            headers: this.apiHeaders,
+            headers: this.getHeaders(),
             data: this.apiBody
         })
         this.cleanupFields()
@@ -110,10 +118,10 @@ export class RequestHandler {
     async putRequest(statusCode: number){
         const url = this.getUrl()
 
-        this.logger.logRequest('PUT', url, this.apiHeaders, this.apiBody)
+        this.logger.logRequest('PUT', url, this.getHeaders(), this.apiBody)
 
         const response = await this.request.put(url, {
-            headers: this.apiHeaders,
+            headers: this.getHeaders(),
             data: this.apiBody
         })
         this.cleanupFields()
@@ -131,10 +139,10 @@ export class RequestHandler {
     async deleteRequest(statusCode: number){
         const url = this.getUrl()
 
-        this.logger.logRequest('DELETE', url, this.apiHeaders)
+        this.logger.logRequest('DELETE', url, this.getHeaders())
 
         const response = await this.request.delete(url, {
-            headers: this.apiHeaders
+            headers: this.getHeaders()
         })
         this.cleanupFields()
         
@@ -155,12 +163,20 @@ export class RequestHandler {
         }
     }
 
+    private getHeaders(){
+        if (!this.clearAuthFlag) {
+            this.apiHeaders['Authorization'] = this.apiHeaders['Authorization'] || this.defaultAuthToken
+        }
+        return this.apiHeaders
+    }
+
     private cleanupFields(){
         this.apiBody = {}
         this.apiHeaders = {}
         this.baseUrl = undefined
         this.apiPath = ''
         this.queryParams = {}
+        this.clearAuthFlag = false
     }
 
 }

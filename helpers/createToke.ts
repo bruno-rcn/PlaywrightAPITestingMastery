@@ -4,7 +4,7 @@ import { RequestHandler } from "../utils/request-handler";
 import {request} from "@playwright/test"
 
 export async function createToken(email: string, password: string){
-    const context = await request.newContext()
+  const context = await request.newContext()
   const logger = new APILogger()
   const api = new RequestHandler(context, config.apiUrl, logger)
 
