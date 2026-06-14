@@ -99,4 +99,31 @@ b. Via terminal
 
 
 3. Building a Framework
+  3.1 Create the RequestHandler file
+  3.2 Create the Fixture file
+  3.3 Add the request url builder
+  3.4 Add into the RequestHandler file the way to access the Playwright library Request methods (post, get, put and delete)
 
+a. Separete the key components of API requests.
+Every API request consists of five main components:
+  URL
+  Path
+  Headers
+  Parameters
+  Body
+
+Obs: Params, Headers and Body use Object as parameters since we send a JSON object
+
+We started by creating a new folder called utils and a file named { request-handler.ts. } 
+Inside this file, we defined a class RequestHandler with methods to handle each of the five components
+Each method saves the provided values into private fields of the class, allowing for reuse later.
+
+
+b. Fixtures
+The concept of test fixtures in the Playwright framework. A test fixture is a function that serves as a precondition or teardown for tests, 
+offering more capabilities than traditional test hooks like before and after.
+
+Key Concepts
+Test Fixture: A reusable function that sets up conditions for tests.
+Before Hooks: Traditional hooks that require restructuring tests when different tokens are needed.
+Fixture Advantages: Avoids code duplication and allows for cleaner test organization.
