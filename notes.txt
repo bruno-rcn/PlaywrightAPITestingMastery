@@ -1,0 +1,102 @@
+1.. Environment configuration:
+
+- download and install: Node Js LTS - Javascript runtime
+	node -v: v22.12.0
+	npm -v: 10.9.0
+
+- download and install: Visual Studio Code
+	playwright test for vscode (Microsoft.com)
+	open in default browser (peakchen90)
+	Material icon theme
+	
+- download and install: Postman
+
+
+
+
+
+2.. Playwright setup:
+
+
+Playwright doc: https://playwright.dev/docs/intro
+
+In the root of the project:
+
+- playwright.config.ts
+	The main config file from the project
+
+- package,json
+	config file from node js. Where we will have our dependencies for the project
+
+
+
+
+3.. What is na api ?
+
+I did into the note
+
+
+
+
+4.. Get Request
+
+Await is a mandatory keyword when you trigger functions wich are promises.
+	Promise is the type of function in js that should return you the result within a defined timeout
+	Promose has just two status resolve or rejected
+and by default playwright will wait for 30 sec to execute the function
+
+
+To build the TC:
+1. create the test function:
+test('', () => {
+  
+});
+
+2. Add the parameters
+test('Get test Articles', async ({request}) => {
+  
+});
+
+3.   // Create the request and get the response
+test('Get test Articles', async ({request}) => {
+  // Create the request and get the response
+  const articlesResponse = await request.get('https://conduit-api.bondaracademy.com/api/articles')
+});
+
+4. Extract the JSON body
+test('Get test Articles', async ({request}) => {
+  // Create the request and get the response
+  const articlesResponse = await request.get('https://conduit-api.bondaracademy.com/api/articles')
+
+  // Extract the JSON body
+  const articlesResponseBodyJSON = await articlesResponse.json()
+
+});
+
+5. Assertions
+test('Get test Articles', async ({request}) => {
+  // Create the request and get the response
+  const articlesResponse = await request.get('https://conduit-api.bondaracademy.com/api/articles')
+
+  // Extract the JSON body
+  const articlesResponseBodyJSON = await articlesResponse.json()
+
+  expect(articlesResponse.status()).toEqual(200)
+  expect(articlesResponseBodyJSON.articlesCount).toEqual(10)
+});
+
+
+
+
+6.. Execute the tests
+
+a. Via playwright plugin
+
+b. Via terminal
+
+
+-------
+
+
+3. Building a Framework
+
