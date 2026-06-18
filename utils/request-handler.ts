@@ -1,17 +1,17 @@
-import { APIRequestContext } from "@playwright/test"
+import { APIRequestContext, expect } from "@playwright/test"
 
 export class RequestHandler {
 
-    private baseUrl: string = ''
+    private baseUrl?: string
     private defaultBaseUrl: string = ''
     private apiPath: string = ''
     private queryParameters: object = {}
-    private apiHeaders: object = {}
+    private apiHeaders: Record<string, string> = {}
     private apiBody: object = {}
     private request: APIRequestContext
 
     // Method that defines the requireds params for new instances for this class
-    // here we will have: request fixtures form PW and the base url
+    // here we will have: request fixtures form PW and the base url to get access to the methods to build a request POST, GET, PUT and DELETE
     constructor(requestParams: APIRequestContext, apiBaseUrl: string){
         this.request = requestParams
         this.defaultBaseUrl = apiBaseUrl
@@ -32,7 +32,7 @@ export class RequestHandler {
         return this
     }
 
-    headers(headers: object){
+    headers(headers: Record<string, string>){
         this.apiHeaders = headers
         return this
     }
@@ -53,5 +53,57 @@ export class RequestHandler {
         }
         return url.toString()
     }
+
+    // Request methods
+    async getRequest(statusCode: number){
+        const url = this.getUrl()
+        
+        const response = await this.request.get(url, {
+            headers: this.apiHeaders
+        })
+        expect(response.status()).toEqual(statusCode)
+
+        const responseJSON = await response.json()
+
+        return responseJSON
+    }
+
+    async postRequest(statusCode: number){
+        const url = this.getUrl()
+        
+        const response = await this.request.post(url, {
+            headers: this.apiHeaders,
+            data: this.apiBody
+        })
+        expect(response.status()).toEqual(statusCode)
+
+        const responseJSON = await response.json()
+
+        return responseJSON
+    }
+
+    async putRequest(statusCode: number){
+        const url = this.getUrl()
+        
+        const response = await this.request.put(url, {
+            headers: this.apiHeaders,
+            data: this.apiBody
+        })
+        expect(response.status()).toEqual(statusCode)
+
+        const responseJSON = await response.json()
+
+        return responseJSON
+    }
+
+    async deleteRequest(statusCode: number){
+        const url = this.getUrl()
+        
+        const response = await this.request.delete(url, {
+            headers: this.apiHeaders
+        })
+        expect(response.status()).toEqual(statusCode)
+    }
+
 }
 
